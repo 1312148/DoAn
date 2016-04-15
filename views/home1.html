@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <title> Home </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="css/homestyle.css"> 	
+  </head>
+  <body>
+   <!--TOP: START -->
+      <div class="top"> 
+        <div class ="homebannertext">
+          Chatvoi<span>DUC</span>
+		
+        </div>
+       
+      </div>  
+      <!--TOP: END -->        
+     
+      <!--CONTENT: START -->
+      <div class="content">
+        
+      </div>
+      <!--CONTENT: END -->
+      <!--FOOTER: START -->
+      <div class="footer">  
+		<form id="chatForm">        
+			<textarea id="message" placeholder="Write something.." ></textarea>
+			<input type="submit" id="submit" onkeypress='PressEnterToSend()' value="SEND" />			
+		</form>
+      <!--FOOTER: END -->
+	  
+	
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="../js/moment.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>	
+	<script>
+	var socket = io();
+
+	$('#message').keypress(function(e){
+	// Submit the form on enter
+
+	if(e.which == 13) {
+		e.preventDefault();
+		$(chatForm).trigger('submit');
+		}
+
+	});
+
+	 $(chatForm).submit(function(e){
+		e.preventDefault();	
+		socket.emit('chat message', $('#message').val());
+		$('#message').val("");
+		return false;
+ });
+	</script>
+
+  </body>
+</html>
